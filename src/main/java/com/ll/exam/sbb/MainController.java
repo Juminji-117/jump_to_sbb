@@ -75,6 +75,14 @@ public class MainController {
     @GetMapping("/gugudan")
     @ResponseBody
     public String gugudan(Integer dan, Integer limit) { // Integer는 null 가능. int는 null 불가.
+            if (limit == null) {
+                limit = 9;
+            }
+
+            if (dan == null) {
+                dan = 9;
+            }
+
     Integer finalDan = dan;
         return IntStream.rangeClosed(1, limit)
             .mapToObj(i -> "%d * %d = %d".formatted(finalDan, i, finalDan * i))

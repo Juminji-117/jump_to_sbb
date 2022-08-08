@@ -3,6 +3,10 @@ package com.ll.exam.sbb;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+
 
 @Controller
 public class MainController {
@@ -66,5 +70,14 @@ public class MainController {
         increaseNo++;
         return increaseNo;
 
+    }
+
+    @GetMapping("/gugudan")
+    @ResponseBody
+    public String gugudan(Integer dan, Integer limit) { // Integer는 null 가능. int는 null 불가.
+    Integer finalDan = dan;
+        return IntStream.rangeClosed(1, limit)
+            .mapToObj(i -> "%d * %d = %d".formatted(finalDan, i, finalDan * i))
+            .collect(Collectors.joining("<br>\n"));
     }
 }

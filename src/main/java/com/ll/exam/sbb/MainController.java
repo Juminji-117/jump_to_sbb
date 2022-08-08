@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class MainController {
+    private int increaseNo =0; // 지역변수는 함수실행 후 소멸 -> 클래스변수로 선언해줘야 increase() 새로고침할 때마다 ++ 증가
 
     @RequestMapping("/sbb")
     // 아래 함수의 리턴값을 그대로 브라우저에 표시
@@ -45,5 +46,25 @@ public class MainController {
                 <h1>입력된 나이 : %d</h1>
                 <h1>안녕하세요, POST 방식으로 오셨군요.</h1>
                 """.formatted(age);
+    }
+
+    @GetMapping("/plus")
+    @ResponseBody
+    public int plus (int a ,int b){ // 리턴타입 String 아니고 int도 ok. java에서 browser로 전송할 때 어차피 문장화됨.
+        return a+b;
+    }
+
+    @GetMapping("/minus")
+    @ResponseBody
+    public int minus (int a ,int b){
+        return a-b;
+    }
+
+    @GetMapping("/increase")
+    @ResponseBody
+    public int increase (){
+        increaseNo++;
+        return increaseNo;
+
     }
 }

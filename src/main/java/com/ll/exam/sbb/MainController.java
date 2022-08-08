@@ -115,15 +115,6 @@ public class MainController {
             default -> "모름";
         };
     }
-/* session 잘못 짠 코드
-    @GetMapping("/saveSessionAge/{age}")
-    @ResponseBody
-    public void saveSessionAge (@PathVariable int age, HttpSession session){
-        session.setAttribute("sessionUserAge", age);
-        Integer value = (Integer)session.getAttribute("sessionUserAge");
-        System.out.print(value);
-    }
- */
 
     @GetMapping("/saveSession/{name}/{value}")
     @ResponseBody

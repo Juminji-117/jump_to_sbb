@@ -204,7 +204,7 @@ public class MainController {
         return "%d번 게시물을 삭제하였습니다.".formatted(article.getId());
     }
 
-       /*
+/*
    @GetMapping("addPersonOldWay")
     @ResponseBody
     Person addPersonOldWay(int id, int age, String name) {
@@ -212,9 +212,10 @@ public class MainController {
 
         return p;
     }
-    */
+ */
 
-    @GetMapping("addPerson")
+
+    @GetMapping("/addPerson/{id}")
     @ResponseBody
     Person addPerson(Person p) {
         return p;

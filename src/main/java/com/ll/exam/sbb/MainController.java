@@ -204,21 +204,7 @@ public class MainController {
         return "%d번 게시물을 삭제하였습니다.".formatted(article.getId());
     }
 
-}
-
-@AllArgsConstructor
-@Getter
-@Setter
-class Article {
-    private static int lastId = 0;
-    private int id;
-    private String title;
-    private String body;
-    public Article(String title, String body) { // 생성자 // Article 객체 생성될 때 실행
-        this(++lastId, title, body);
-    }
-
-   /*
+       /*
    @GetMapping("addPersonOldWay")
     @ResponseBody
     Person addPersonOldWay(int id, int age, String name) {
@@ -233,6 +219,21 @@ class Article {
     Person addPerson(Person p) {
         return p;
     }
+}
+
+@AllArgsConstructor
+@Getter
+@Setter
+class Article {
+    private static int lastId = 0;
+    private int id;
+    private String title;
+    private String body;
+    public Article(String title, String body) { // 생성자 // Article 객체 생성될 때 실행
+        this(++lastId, title, body);
+    }
+
+
 }
 
 

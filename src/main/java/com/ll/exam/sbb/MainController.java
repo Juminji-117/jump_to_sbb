@@ -19,6 +19,7 @@ import java.util.stream.IntStream;
 @Controller
 public class MainController {
     private int increaseNo =0; // 지역변수는 함수실행 후 소멸 -> 클래스변수로 선언해줘야 increase() 새로고침할 때마다 ++ 증가
+    private List<Article> articles = new ArrayList<>();
 
     @RequestMapping("/sbb")
     // 아래 함수의 리턴값을 그대로 브라우저에 표시
@@ -144,14 +145,28 @@ public class MainController {
     public String addArticle(String title, String body) {
         Article article = new Article(title, body); // Article 생성자 호출됨
 
+        articles.add(article);
+
         return "%d번 게시물이 생성되었습니다.".formatted(article.getId());
+    }
+
+    @GetMapping("/article/{id}")
+    @ResponseBody
+    public Article getArticle(@PathVariable int id) {
+        Article article = articles
+                .stream()
+                .filter(a -> a.getId() == id) // 1번
+                .findFirst()
+                .get();
+
+        return article;
     }
 }
 
 @AllArgsConstructor
+@Getter
 class Article {
     private static int lastId = 0;
-    @Getter
     private final int id;
     private final String title;
     private final String body;

@@ -217,4 +217,29 @@ class Article {
     public Article(String title, String body) { // 생성자 // Article 객체 생성될 때 실행
         this(++lastId, title, body);
     }
+
+   /*
+   @GetMapping("addPersonOldWay")
+    @ResponseBody
+    Person addPersonOldWay(int id, int age, String name) {
+        Person p = new Person(id, age, name);
+
+        return p;
+    }
+    */
+
+    @GetMapping("addPerson")
+    @ResponseBody
+    Person addPerson(Person p) {
+        return p;
+    }
 }
+
+
+@AllArgsConstructor
+@Getter
+class Person {
+    private int id;
+    private int age;
+    private String name;
+};

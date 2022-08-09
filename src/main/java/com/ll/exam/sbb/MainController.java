@@ -2,6 +2,7 @@ package com.ll.exam.sbb;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -19,8 +21,11 @@ import java.util.stream.IntStream;
 @Controller
 public class MainController {
     private int increaseNo =0; // 지역변수는 함수실행 후 소멸 -> 클래스변수로 선언해줘야 increase() 새로고침할 때마다 ++ 증가
-    private List<Article> articles = new ArrayList<>();
-
+    private List<Article> articles = new ArrayList<>(
+            Arrays.asList(
+                    new Article("제목", "내용"),
+                    new Article("제목", "내용"))
+    );
     @RequestMapping("/sbb")
     // 아래 함수의 리턴값을 그대로 브라우저에 표시
     // 아래 함수의 리턴값을 문자열화 해서 브라우저 응답의 바디에 담는다.
@@ -157,19 +162,39 @@ public class MainController {
                 .stream()
                 .filter(a -> a.getId() == id) // 1번
                 .findFirst()
-                .get();
+                .orElse(null);
 
         return article;
+    }
+
+    @GetMapping("/modifyArticle/{id}")
+    @ResponseBody
+    public String modifyArticle(@PathVariable int id, String title, String body) {
+        Article article = articles
+                .stream()
+                .filter(a -> a.getId() == id) // 1번
+                .findFirst()
+                .orElse(null); // 비어있을 경우 null로
+
+        if (article == null) {
+            return "%d번 게시물은 존재하지 않습니다.".formatted(id); // article==null인 경우이므로, article.getId() 사용X
+        }
+
+        article.setTitle(title);
+        article.setBody(body);
+
+        return "%d번 게시물을 수정하였습니다.".formatted(article.getId());
     }
 }
 
 @AllArgsConstructor
 @Getter
+@Setter
 class Article {
     private static int lastId = 0;
-    private final int id;
-    private final String title;
-    private final String body;
+    private int id;
+    private String title;
+    private String body;
     public Article(String title, String body) { // 생성자 // Article 객체 생성될 때 실행
         this(++lastId, title, body);
     }

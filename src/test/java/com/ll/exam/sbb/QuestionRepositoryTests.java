@@ -11,7 +11,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-public class QuestionRepositoryTests {
+public class QuestionRepositoryTests { // QustionRepositoryTests ver.instructor
     @Autowired
     private QuestionRepository questionRepository;
     private static int lastSampleDataId;
@@ -53,7 +53,7 @@ public class QuestionRepositoryTests {
     }
 
     @Test
-    void 저장() { // QustionRepositoryTests ver.instructor
+    void 저장() {
         Question q1 = new Question();
         q1.setSubject("sbb가 무엇인가요?");
         q1.setContent("sbb에 대해서 알고 싶습니다.");

@@ -18,6 +18,6 @@ public interface QuestionRepository extends JpaRepository<Question, Integer>, Re
     @Transactional
     @Modifying
     @Query(value = "truncate question", nativeQuery = true)
-    void truncate();
+    void truncate(); // 이건 지우면 X. truncateTable 하면 자동으로 이게 실행되므로.
 }
 

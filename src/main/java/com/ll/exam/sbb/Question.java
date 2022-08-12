@@ -21,6 +21,6 @@ public class Question {
     private String content;
     private LocalDateTime createDate;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE) // "question"은 Answer Entitiy의 question 의미
+    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE,  fetch = FetchType.EAGER) // JPA 규칙 -> @OneToMany는 기본적으로 Lazy
     private List<Answer> answerList; // DB 컬럼에는 생성X
 }

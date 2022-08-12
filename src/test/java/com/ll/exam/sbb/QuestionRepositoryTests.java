@@ -43,7 +43,6 @@ public class QuestionRepositoryTests { // QustionRepositoryTests ver.instructor
     }
 
     public static void clearData(QuestionRepository questionRepository) {
-
         questionRepository.deleteAll(); // DELETE FROM question;
         questionRepository.truncateTable();
     }
@@ -51,6 +50,7 @@ public class QuestionRepositoryTests { // QustionRepositoryTests ver.instructor
     private void clearData() {
         clearData(questionRepository);
     }
+
 
     @Test
     void 저장() {

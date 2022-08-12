@@ -16,9 +16,11 @@ public interface RepositoryUtil {
     void enableForeignKeyChecks();
 
     default void truncateTable() {
-        disableForeignKeyChecks();
+        //이제는 foreign key 제약조건 체크 안해도 되기 때문에 주석처리
+
+        // disableForeignKeyChecks();
         truncate();
-        enableForeignKeyChecks();
+        // enableForeignKeyChecks();
     }
 
     void truncate();

@@ -9,6 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 public interface AnswerRepository extends JpaRepository<Answer, Integer>, RepositoryUtil {
     @Transactional
     @Modifying
-    @Query(value = "truncate question", nativeQuery = true)
+    @Query(value = "ALTER TABLE answer AUTO_INCREMENT = 1", nativeQuery = true)
     void truncate(); // 이건 지우면 X. truncateTable 하면 자동으로 이게 실행되므로.
 }

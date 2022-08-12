@@ -33,7 +33,10 @@ public class AnswerRepositoryTests {
     }
     private void createSampleData() {
         QuestionRepositoryTests.createSampleData(questionRepository);
-        Question q = questionRepository.findById(1).get();
+        Question q = questionRepository.findById(1).get(); // 관련 답변이 하나없는 상태에서 쿼리 발생
+
+        System.out.println("q 1st : " + q);
+
         Answer a1 = new Answer();
         a1.setContent("sbb는 질문답변 게시판 입니다.");
         a1.setQuestion(q);
@@ -76,6 +79,8 @@ public class AnswerRepositoryTests {
         // SELECT * FROM question WHERE id = 1
         Question q = questionRepository.findById(1).get();
         // DB 연결이 끊김
+
+        System.out.println("q 2nd : " + q);
 
         //DB 연결이 끊겼기 때문에 관련된_question_조회() TEST처럼 바로 다시 가져올 수 없음(변경 전 : fetchType.LAZY였으므로)
         // 즉 다시 DB 통신해야 됨 -> Question 엔티티에서 answerList fetchType.Eager로 바꿔서 해결완료

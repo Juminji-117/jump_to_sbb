@@ -23,5 +23,10 @@ public class Question {
     private LocalDateTime createDate;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE) // JPA 규칙 -> @OneToMany는 기본적으로 Lazy
-    private List<Answer> answerList = new ArrayList<>(); // DB 컬럼에는 생성X
+    private List<Answer> answerList = new ArrayList<>();
+
+    public void addAnswer(Answer answer) {
+        answer.setQuestion(this);
+        getAnswerList().add(answer);
+    }
 }

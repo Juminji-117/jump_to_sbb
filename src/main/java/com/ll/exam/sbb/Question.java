@@ -21,6 +21,6 @@ public class Question {
     private String content;
     private LocalDateTime createDate;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE,  fetch = FetchType.EAGER) // JPA 규칙 -> @OneToMany는 기본적으로 Lazy
+    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE) // JPA 규칙 -> @OneToMany는 기본적으로 Lazy
     private List<Answer> answerList; // DB 컬럼에는 생성X
 }

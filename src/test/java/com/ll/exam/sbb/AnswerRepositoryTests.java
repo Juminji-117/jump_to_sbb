@@ -1,8 +1,12 @@
 package com.ll.exam.sbb;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -65,6 +69,8 @@ public class AnswerRepositoryTests {
         assertThat(q.getId()).isEqualTo(1);
     }
 
+    @Transactional
+    @Rollback(false)
     @Test
     void question으로부터_관련된_질문들_조회() {
         // SELECT * FROM question WHERE id = 1
@@ -73,6 +79,7 @@ public class AnswerRepositoryTests {
 
         //DB 연결이 끊겼기 때문에 관련된_question_조회() TEST처럼 바로 다시 가져올 수 없음(변경 전 : fetchType.LAZY였으므로)
         // 즉 다시 DB 통신해야 됨 -> Question 엔티티에서 answerList fetchType.Eager로 바꿔서 해결완료
+        // 이번엔 Eager을 다시 지우고 하나의 트랜잭션으로 처리해서 문제 해결하기 -> [아직 미해결]
         // SELECT * FROM answer WHERE question_id = 1
         List<Answer> answerList = q.getAnswerList();
 

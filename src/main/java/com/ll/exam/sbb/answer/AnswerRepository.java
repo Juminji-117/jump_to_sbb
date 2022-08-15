@@ -1,5 +1,6 @@
-package com.ll.exam.sbb;
+package com.ll.exam.sbb.answer;
 
+import com.ll.exam.sbb.answer.Answer;
 import com.ll.exam.sbb.base.RepositoryUtil;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

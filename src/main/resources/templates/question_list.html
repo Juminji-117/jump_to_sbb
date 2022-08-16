@@ -21,8 +21,9 @@
     </thead>
     <tbody>
    <tr th:each="question, loop : ${questionList}">
-        <td>[[${question.subject}]]</td>
-        <td>[[${question.createDate}]]</td>
+       <td>[[${loop.count}]] / [[${loop.size}]]</td>
+       <td>[[${question.subject}]]</td>
+       <td>[[${question.createDate}]]</td>
     </tr>
     </tbody>
 </table>

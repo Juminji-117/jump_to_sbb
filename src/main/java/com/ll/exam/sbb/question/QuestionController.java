@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-@Controller("/question")
+@RequestMapping("/question")
+@Controller
 @RequiredArgsConstructor // 생성자 주입
 public class QuestionController {
     // @Autowired // 필드 주입

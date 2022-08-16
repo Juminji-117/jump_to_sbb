@@ -28,6 +28,7 @@ public class QuestionController {
 
     @RequestMapping("/detail/{id}")
     public String detail(Model model, @PathVariable int id) {
+        // question fetchType.Eager로 설정하면 이 때 answerList 가져옴
         Question question = questionService.getQuestion(id);
 
         model.addAttribute("question", question);

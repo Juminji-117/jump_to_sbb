@@ -221,7 +221,13 @@ public class MainController {
     Person addPerson(Person p) {
         return p;
     }
+
+    @RequestMapping("/")
+    public String root() { // redirect root to question/list
+        return "redirect:/question/list";
+    }
 }
+
 
 @AllArgsConstructor
 @Getter

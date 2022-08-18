@@ -44,13 +44,19 @@ public class QuestionController {
     }
     @PostMapping("/create")
     public String questionCreate(Model model, QuestionForm questionForm) { // subject, content 대신에 questionForm으로 한번에
+        boolean hasError = false;
         if (questionForm.getSubject() == null || questionForm.getSubject().trim().length() == 0) {
-            model.addAttribute("errorMsg", "제목 좀...");
-            return "question_form";
+            model.addAttribute("subjectErrorMsg", "제목 좀...");
+            hasError = true;
         }
 
         if (questionForm.getContent() == null || questionForm.getContent().trim().length() == 0) {
-            model.addAttribute("errorMsg", "내용 좀...");
+            model.addAttribute("contentErrorMsg", "내용 좀...");
+            hasError = true;
+        }
+
+        if (hasError) {
+            model.addAttribute("questionForm", questionForm);
             return "question_form";
         }
 

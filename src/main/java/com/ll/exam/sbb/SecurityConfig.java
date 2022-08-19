@@ -24,7 +24,12 @@ public class SecurityConfig {
                 .csrf().ignoringAntMatchers("/h2-console/**")
                 .and()
                 .headers().addHeaderWriter(new XFrameOptionsHeaderWriter(
-                        XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN));
+                        XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
+                .and()
+                .formLogin() // 양식 로그인 위해 구성 확장 // Spring Security에서 제공하는 기본값 재정의
+                .loginPage("/user/login") // 사용자 정의 로그인 페이지
+                .defaultSuccessUrl("/"); // 성공적인 로그인 후 랜딩 페이지
+
         return http.build();
     }
 

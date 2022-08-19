@@ -30,11 +30,20 @@ public class AnswerRepositoryTests {
     }
 
 
-    private void clearData() {
+    public static void clearData(AnswerRepository answerRepository, QuestionRepository questionRepository) {
         QuestionRepositoryTests.clearData(questionRepository);
         answerRepository.deleteAll(); // DELETE FROM question;
         answerRepository.truncateTable();
     }
+
+
+    //static이 붙지 않은(내부에서만 사용하는) 메서드를 따로 생성하고 싶지 않다면
+    // beforeEach()의 clearData()안에 인수로
+    // answerRepository, questionRepository를 전달하는 방법도 있음
+    private void clearData() {
+        clearData(answerRepository, questionRepository);
+    }
+
     private void createSampleData() {
         QuestionRepositoryTests.createSampleData(questionRepository);
         Question q = questionRepository.findById(1L).get(); // 관련 답변이 하나없는 상태에서 쿼리 발생

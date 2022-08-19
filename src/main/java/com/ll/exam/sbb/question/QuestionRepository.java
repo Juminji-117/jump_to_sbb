@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public interface QuestionRepository extends JpaRepository<Question, Integer>, RepositoryUtil { // Integer는 Primary Key
+public interface QuestionRepository extends JpaRepository<Question, Long>, RepositoryUtil { // Long은 Primary Key
     Question findBySubject(String subject);
 
     Question findBySubjectAndContent(String subject, String content);

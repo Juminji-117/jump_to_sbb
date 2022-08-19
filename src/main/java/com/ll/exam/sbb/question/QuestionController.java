@@ -29,7 +29,7 @@ public class QuestionController {
     }
 
     @GetMapping("/detail/{id}")
-    public String detail(Model model, @PathVariable int id, AnswerForm answerForm) {
+    public String detail(Model model, @PathVariable long id, AnswerForm answerForm) {
         // question fetchType.Eager로 설정하면 이 때 answerList 가져옴
         Question question = questionService.getQuestion(id);
 

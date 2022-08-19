@@ -1,5 +1,6 @@
 package com.ll.exam.sbb;
 
+import com.ll.exam.sbb.user.UserSecurityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 // 시큐리티 설정
 @Configuration
@@ -34,7 +36,13 @@ public class SecurityConfig {
                 .and()
                 .formLogin() // 양식 로그인 위해 구성 확장 // Spring Security에서 제공하는 기본값 재정의
                 .loginPage("/user/login") // 사용자 정의 로그인 페이지
-                .defaultSuccessUrl("/"); // 성공적인 로그인 후 랜딩 페이지
+                .defaultSuccessUrl("/") // 성공적인 로그인 후 랜딩 페이지
+                .defaultSuccessUrl("/")
+                .and()
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
+                .logoutSuccessUrl("/")
+                .invalidateHttpSession(true);
 
         return http.build();
     }

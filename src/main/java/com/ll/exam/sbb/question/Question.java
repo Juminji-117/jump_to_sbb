@@ -18,11 +18,16 @@ public class Question {
     @Id // primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
     private Long id;
+
     @Column(length = 200) // varchar(200)
     private String subject;
+
     @Column(columnDefinition = "TEXT")
     private String content;
+
     private LocalDateTime createDate;
+
+    private LocalDateTime modifyDate;
 
     @OneToMany(mappedBy = "question", cascade = {CascadeType.ALL}) // JPA 규칙 -> @OneToMany는 기본적으로 Lazy
     private List<Answer> answerList = new ArrayList<>();

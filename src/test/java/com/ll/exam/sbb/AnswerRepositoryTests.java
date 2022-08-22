@@ -5,6 +5,7 @@ import com.ll.exam.sbb.answer.AnswerRepository;
 import com.ll.exam.sbb.question.Question;
 import com.ll.exam.sbb.question.QuestionRepository;
 import com.ll.exam.sbb.user.SiteUser;
+import com.ll.exam.sbb.user.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,8 @@ public class AnswerRepositoryTests {
     private QuestionRepository questionRepository;
     @Autowired
     private AnswerRepository answerRepository;
-    private int lastSampleDataId;
+    @Autowired
+    private UserRepository userRepository;
     @BeforeEach
     void beforeEach() {
         clearData();
@@ -31,18 +33,17 @@ public class AnswerRepositoryTests {
     }
 
 
-    public static void clearData(AnswerRepository answerRepository, QuestionRepository questionRepository) {
-        QuestionRepositoryTests.clearData(questionRepository);
-        answerRepository.deleteAll(); // DELETE FROM question;
-        answerRepository.truncateTable();
+    public static void clearData(UserRepository userRepository, AnswerRepository answerRepository, QuestionRepository questionRepository) {
+        UserServiceTests.clearData(userRepository, answerRepository, questionRepository);
     }
+
 
 
     //static이 붙지 않은(내부에서만 사용하는) 메서드를 따로 생성하고 싶지 않다면
     // beforeEach()의 clearData()안에 인수로
     // answerRepository, questionRepository를 전달하는 방법도 있음
     private void clearData() {
-        clearData(answerRepository, questionRepository);
+        clearData(userRepository, answerRepository, questionRepository);
     }
 
     private void createSampleData() {

@@ -1,6 +1,5 @@
 package com.ll.exam.sbb.question;
 
-import com.ll.exam.sbb.DataNotFoundException;
 import com.ll.exam.sbb.answer.AnswerForm;
 import com.ll.exam.sbb.user.SiteUser;
 import com.ll.exam.sbb.user.UserService;
@@ -54,11 +53,6 @@ public class QuestionController {
         // id에 해당하는 question 찾아오기
         Question question = questionService.getQuestion(id);
 
-        // question id 존재하지 않을 경우 예외 발생시키기
-        if ( question == null ) {
-            throw new DataNotFoundException("%d번 질문은 존재하지 않습니다.");
-        }
-
         // question.작성자 == 현재 회원 정보 동일성 체크
         // 동일성 체크해서 modify 페이지(질문폼) 리턴해주기만 하면 되므로 SiteUser 객체 생성할 필요 X
         if(!question.getAuthor().getUsername().equals(principal.getName())) {
@@ -83,11 +77,6 @@ public class QuestionController {
 
         // id에 해당하는 question 찾아오기
         Question question = questionService.getQuestion(id);
-
-        // question id 존재하지 않을 경우 예외 발생시키기
-        if (question == null) {
-            throw new DataNotFoundException("%d번 질문은 존재하지 않습니다.");
-        }
 
         // question.작성자 == 현재 회원 정보 동일성 체크
         // SiteUser에 관한 정보는 수정하지 않으므로 객체 생성할 필요 X
@@ -128,10 +117,6 @@ public class QuestionController {
     @GetMapping("/delete/{id}")
     public String questionDelete(Principal principal, @PathVariable("id") Integer id) {
         Question question = questionService.getQuestion(id);
-
-        if (question == null) {
-            throw new DataNotFoundException("%d번 질문은 존재하지 않습니다.");
-        }
 
         if (!question.getAuthor().getUsername().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");

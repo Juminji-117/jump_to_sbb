@@ -18,12 +18,19 @@
                     <div th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd HH:mm')}"></div>
                 </div>
             </div>
-            <!-- 수정버튼, 작성자가 아니면(비로그인, 다른 사용자) 이 버튼은 아예 보이지 않음-->
+
             <div class="my-3">
+                <!-- 수정버튼, 작성자가 아니면(비로그인, 다른 사용자) 이 버튼은 아예 보이지 않음-->
                 <a th:href="@{|/question/modify/${question.id}|}" class="btn btn-sm btn-outline-secondary"
                    sec:authorize="isAuthenticated()"
                    th:if="${question.author != null and #authentication.getPrincipal().getUsername() == question.author.username}"
                    th:text="수정"></a>
+
+                <!-- 삭제버튼, 작성자가 아니면(비로그인, 다른 사용자) 이 버튼은 아예 보이지 않음-->
+               <a onclick="if ( !confirm('정말로 삭제하시겠습니까?') ) return false;" th:href="@{|/question/delete/${question.id}|}"
+                   class="btn btn-sm btn-outline-secondary" sec:authorize="isAuthenticated()"
+                   th:if="${question.author != null and #authentication.getPrincipal().getUsername() == question.author.username}"
+                   th:text="삭제"></a>
             </div>
         </div>
     </div>

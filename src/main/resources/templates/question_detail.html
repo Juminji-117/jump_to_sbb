@@ -80,7 +80,16 @@
                     <a th:href="@{|/answer/modify/${answer.id}|}" class="btn btn-sm btn-outline-secondary"
                        sec:authorize="isAuthenticated()"
                        th:if="${answer.author != null and #authentication.getPrincipal().getUsername() == answer.author.username}"
-                       th:text="수정"></a>
+                       th:text="수정">
+
+                    </a>
+                    <!-- 답변 삭제 버튼 -->
+                    <a onclick="if ( !confirm('정말로 삭제하시겠습니까?') ) return false;" th:href="@{|/answer/delete/${answer.id}|}"
+                       class="btn btn-sm btn-outline-secondary" sec:authorize="isAuthenticated()"
+                       th:if="${answer.author != null and #authentication.getPrincipal().getUsername() == answer.author.username}"
+                       th:text="삭제">
+
+                    </a>
                 </div>
 
         </div>

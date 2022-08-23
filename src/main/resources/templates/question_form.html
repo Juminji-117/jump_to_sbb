@@ -7,6 +7,7 @@
     <h5 class="my-3 border-bottom pb-2">질문등록</h5>
 
     <!-- 질문등록버튼이 create와 modify 둘 다 사용해야 하므로 현재페이지 재로딩하도록 폼 action 설정-->
+    <!-- csrf 토큰 존재 + post 요청이면 csrf토큰이 알아서 th:action="@{''}" 자리에 들어옴 -->
     <form th:action="@{''}" th:object="${questionForm}" method="post">
         <div th:replace="form_errors :: formErrorsFragment"></div> <!--폼체크 -->
 

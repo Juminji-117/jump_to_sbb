@@ -1,12 +1,14 @@
 package com.ll.exam.sbb.question;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-@AllArgsConstructor
+//QuestionController.questionModify()에서 setSubject, setContent 필요하므로
+// @AllArgsConstructor -> @Setter로 변경
+@Setter
 @Getter
 public class QuestionForm {
     @NotEmpty(message = "제목은 필수항목입니다.")

@@ -6,7 +6,8 @@
 <div layout:fragment="content" class="container">
     <h5 class="my-3 border-bottom pb-2">질문등록</h5>
 
-    <form th:action="@{/question/create}" th:object="${questionForm}" method="post">
+    <!-- 질문등록버튼이 create와 modify 둘 다 사용해야 하므로 현재페이지 재로딩하도록 폼 action 설정-->
+    <form th:action="@{''}" th:object="${questionForm}" method="post">
         <div th:replace="form_errors :: formErrorsFragment"></div> <!--폼체크 -->
 
         <div class="mb-3">

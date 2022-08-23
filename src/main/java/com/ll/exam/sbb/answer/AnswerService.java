@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class AnswerService {
     private final AnswerRepository answerRepository;
 
-    public void create(Question question, String content, SiteUser author) {
+    public Answer create(Question question, String content, SiteUser author) {
         Answer answer = new Answer();
         answer.setContent(content);
         answer.setCreateDate(LocalDateTime.now());
@@ -21,6 +21,9 @@ public class AnswerService {
         question.addAnswer(answer); // OneToMany의 단방향 문제 해결하기 위해 answer.setQuestion 대신 바로 question 객체에 저장하는 것이 좋음
 
         answerRepository.save(answer);
+
+
+        return answer;
     }
 
     public void vote(Answer answer, SiteUser siteUser) {

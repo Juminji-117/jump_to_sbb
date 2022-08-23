@@ -68,6 +68,15 @@
                     <div th:text="${#temporals.format(answer.createDate, 'yyyy-MM-dd HH:mm')}"></div>
                 </div>
             </div>
+
+                <div class="my-3">
+                    <a onclick="if ( !confirm('정말로 추천하시겠습니까?') ) return false;" class="btn btn-sm btn-outline-secondary"
+                    th:href="@{|/answer/vote/${answer.id}|}">
+                        추천
+                        <span class="badge rounded-pill bg-success" th:text="${#lists.size(answer.voter)}"></span>
+                    </a>
+                </div>
+
         </div>
     </div>
     <!-- 답변 반복 끝  -->

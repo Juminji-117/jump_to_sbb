@@ -26,6 +26,13 @@
             </div>
 
             <div class="my-3">
+                <!-- 추천버튼-->
+                <a onclick="if ( !confirm('정말로 추천하시겠습니까?') ) return false;" class="btn btn-sm btn-outline-secondary"
+                   th:href="@{|/question/vote/${question.id}|}">
+                    추천
+                    <span class="badge rounded-pill bg-success" th:text="${#lists.size(question.voter)}"></span>
+                </a>
+
                 <!-- 수정버튼, 작성자가 아니면(비로그인, 다른 사용자) 이 버튼은 아예 보이지 않음-->
                 <a th:href="@{|/question/modify/${question.id}|}" class="btn btn-sm btn-outline-secondary"
                    sec:authorize="isAuthenticated()"

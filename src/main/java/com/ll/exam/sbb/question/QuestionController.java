@@ -47,30 +47,54 @@ public class QuestionController {
         return "question_detail";
     }
 
-    // 데이터 받아 post 요청이 아니므로 questionForm 데이터 @Valid(유효성 체크) 할 필요 없음
+    // 데이터 받아 post 요청이 아니므로 questionForm(subject와 content를 묶은 DTO 객체) @Valid(유효성 체크) 할 필요 없음
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/modify/{id}")
     public String questionModify(QuestionForm questionForm, @PathVariable("id") Integer id, Principal principal) {
+        // id에 해당하는 question 찾아오기
         Question question = this.questionService.getQuestion(id);
 
-        //question id 존재하지 않을 경우 예외 발생시키기
+        // question id 존재하지 않을 경우 예외 발생시키기
         if ( question == null ) {
             throw new DataNotFoundException("%d번 질문은 존재하지 않습니다.");
         }
 
-        // 작성자 == 현재 회원 정보 동일성 체크
+        // question.작성자 == 현재 회원 정보 동일성 체크
         // 동일성 체크해서 modify 페이지(질문폼) 리턴해주기만 하면 되므로 SiteUser 객체 생성할 필요 X
         if(!question.getAuthor().getUsername().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
 
+        // question에서 subject와 content 가져와 questionform에 default value값으로 넣어줌 (≒html의 placeholder 같은 역할)
         questionForm.setSubject(question.getSubject());
         questionForm.setContent(question.getContent());
 
-        //
+        // 질문폼 리턴
         return "question_form";
     }
 
+    @PostMapping("/modify/{id}")
+    public String questionModify(@Valid QuestionForm questionForm, BindingResult bindingResult,
+                                 Principal principal, @PathVariable("id") Integer id) {
+        // @Valid의 바인딩 오류를 담아내는 BindingResult 인터페이스
+        if (bindingResult.hasErrors()) {
+            return "question_form";
+        }
+
+        // id에 해당하는 question 찾아오기
+        Question question = this.questionService.getQuestion(id);
+
+        // question.작성자 == 현재 회원 정보 동일성 체크
+        // SiteUser에 관한 정보는 수정하지 않으므로 객체 생성할 필요 X
+        if (!question.getAuthor().getUsername().equals(principal.getName())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
+        }
+
+        this.questionService.modify(question, questionForm.getSubject(), questionForm.getContent());
+
+        //redirect할 때도 메서드 리턴 타입 String
+        return String.format("redirect:/question/detail/%s", id);
+    }
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/create")
@@ -91,6 +115,8 @@ public class QuestionController {
 
 
         questionService.create(questionForm.getSubject(), questionForm.getContent(),siteUser);
-        return "redirect:/question/list"; // 질문 저장후 질문목록으로 이동
+
+        // 질문 저장후 질문목록으로 이동
+        return "redirect:/question/list";
     }
 }

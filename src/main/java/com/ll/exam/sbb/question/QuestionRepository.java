@@ -11,13 +11,15 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface QuestionRepository extends JpaRepository<Question, Long>, RepositoryUtil { // Long은 Primary Key
-    Page<Question> findBySubjectContains(String kw, Pageable pageable);
-
     Question findBySubject(String subject);
 
     Question findBySubjectAndContent(String subject, String content);
 
     List<Question> findBySubjectLike(String s); // 여러개 반환될 수도 있으므로 리턴타입을 List로
+
+    Page<Question> findBySubjectContains(String kw, Pageable pageable);
+
+    Page<Question>findBySubjectContainsOrContentContains(String kw, String kw_, Pageable pageable);
 
     @Transactional
     @Modifying

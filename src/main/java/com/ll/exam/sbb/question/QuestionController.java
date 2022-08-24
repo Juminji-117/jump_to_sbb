@@ -36,8 +36,10 @@ public class QuestionController {
         return "question_list";
     }
 
+    // 매개변수 String kw 앞에 @RequestParam을 붙이면 무조건 request paramter로 존재해야 하지만
+    // @RequestParam 생략하면 kw 값이 request parameter로 존재하지 않아도 에러나지 않고, request paramter로 존재할시 알아서 스마트하게 request paramter로 처리
     @GetMapping("/listBySubject")
-        public String listBySubject (@RequestParam String kw, Model model, @RequestParam(defaultValue = "0") int page) {
+        public String listBySubject (String kw, Model model, @RequestParam(defaultValue = "0") int page) {
             Page<Question> paging = questionService.findBySubjectContaining(kw, page);
 
             // 미래에 실행된 question_list.html 에서

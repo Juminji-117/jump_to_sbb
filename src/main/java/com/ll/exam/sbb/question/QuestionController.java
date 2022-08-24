@@ -26,8 +26,8 @@ public class QuestionController {
 
     @GetMapping("/list")
     // 이 자리에 @ResponseBody가 없으면 resources/question_list/question_list.html 파일을 뷰로 삼는다.
-    public String list(Model model, @RequestParam(defaultValue = "0") int page) {
-        Page<Question> paging = questionService.getList(page);
+    public String list(String kw, Model model, @RequestParam(defaultValue = "0") int page) {
+        Page<Question> paging = questionService.getList(kw, page);
 
         // 미래에 실행된 question_list.html 에서
         // questionList 라는 이름으로 questionList 변수를 사용할 수 있다.
@@ -35,19 +35,6 @@ public class QuestionController {
 
         return "question_list";
     }
-
-    // 매개변수 String kw 앞에 @RequestParam을 붙이면 무조건 request paramter로 존재해야 하지만
-    // @RequestParam 생략하면 kw 값이 request parameter로 존재하지 않아도 에러나지 않고, request paramter로 존재할시 알아서 스마트하게 request paramter로 처리
-    @GetMapping("/listBySubject")
-        public String listBySubject (String kw, Model model, @RequestParam(defaultValue = "0") int page) {
-            Page<Question> paging = questionService.findBySubjectContaining(kw, page);
-
-            // 미래에 실행된 question_list.html 에서
-            // questionList 라는 이름으로 questionList 변수를 사용할 수 있다.
-            model.addAttribute("paging", paging);
-            return "question_list";
-        }
-
 
         @GetMapping("/detail/{id}")
     public String detail(Model model, @PathVariable long id, AnswerForm answerForm) {

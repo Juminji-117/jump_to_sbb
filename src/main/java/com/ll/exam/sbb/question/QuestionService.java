@@ -18,20 +18,11 @@ import java.util.List;
 public class QuestionService {
     private final QuestionRepository questionRepository;
 
-    public Page<Question> getList(int page) {
+    public Page<Question> getList(String kw, int page) {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("createDate")); //createDate 기준으로 역순 정렬
 
         Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts)); // 한 페이지에 10까지 가능
-        return this.questionRepository.findAll(pageable);
-    }
-
-    public Page<Question> findBySubjectContaining(String kw, int page) {
-        List<Sort.Order> sorts = new ArrayList<>();
-        sorts.add(Sort.Order.desc("createDate"));
-
-        Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
-
         if ( kw == null || kw.trim().length() == 0 ) {
             return questionRepository.findAll(pageable);
         }
@@ -39,11 +30,11 @@ public class QuestionService {
         return questionRepository.findBySubjectContains(kw, pageable);
     }
 
-
-        public Question getQuestion(long id) {
+    public Question getQuestion(long id) {
             return questionRepository.findById(id)
                     .orElseThrow(() -> new DataNotFoundException("no %d question not found,".formatted(id)));
     }
+
     public void create(String subject, String content, SiteUser author) {
         Question q = new Question();
         q.setSubject(subject);

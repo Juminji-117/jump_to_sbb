@@ -26,6 +26,20 @@ public class QuestionService {
         return this.questionRepository.findAll(pageable);
     }
 
+    public Page<Question> findBySubjectContaining(String kw, int page) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("createDate"));
+
+        Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
+
+        if ( kw == null || kw.trim().length() == 0 ) {
+            return questionRepository.findAll(pageable);
+        }
+
+        return questionRepository.findBySubjectContains(kw, pageable);
+    }
+
+
         public Question getQuestion(long id) {
             return questionRepository.findById(id)
                     .orElseThrow(() -> new DataNotFoundException("no %d question not found,".formatted(id)));
@@ -55,4 +69,5 @@ public class QuestionService {
 
         questionRepository.save(question);
     }
+
 }

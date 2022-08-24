@@ -36,7 +36,18 @@ public class QuestionController {
         return "question_list";
     }
 
-    @GetMapping("/detail/{id}")
+    @GetMapping("/listBySubject")
+        public String listBySubject (@RequestParam String kw, Model model, @RequestParam(defaultValue = "0") int page) {
+            Page<Question> paging = questionService.findBySubjectContaining(kw, page);
+
+            // 미래에 실행된 question_list.html 에서
+            // questionList 라는 이름으로 questionList 변수를 사용할 수 있다.
+            model.addAttribute("paging", paging);
+            return "question_list";
+        }
+
+
+        @GetMapping("/detail/{id}")
     public String detail(Model model, @PathVariable long id, AnswerForm answerForm) {
         // question fetchType.Eager로 설정하면 이 때 answerList 가져옴
         Question question = questionService.getQuestion(id);
@@ -136,4 +147,5 @@ public class QuestionController {
         questionService.vote(question, siteUser);
         return "redirect:/question/detail/%d".formatted(id);
     }
-}
+
+    }

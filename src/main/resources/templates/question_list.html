@@ -13,7 +13,14 @@
         <div class="col-6">
             <!-- 검색 form -->
             <form class="input-group">
+                <!-- 검색창 -->
                 <input class="form-control" type="text" name="kw" placeholder="검색어를 입력해주세요." th:value="${param.kw}">
+                <--! 정렬기준 선택 -->
+                <select class="form-select" name="sortCode" th:value="${param.sortCode}">
+                    <option value="NEW">최신순</option>
+                    <option value="OLD">오래된순</option>
+                </select>
+                <!--검색 버튼 -->
                 <button type="submit" class="btn btn-outline-secondary">검색</button>
             </form>
         </div>
@@ -35,7 +42,7 @@
         <tbody>
         <tr th:each="question, loop : ${paging}">
             <!-- 게시물에 일련번호 추가하기 -->
-            <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
+            <td th:text="${question.id}"></td>
             <td class="text-start"> <!-- 질문 제목 list들은 여전히 왼쪽에 나오도록 text-start 적용-->
                 <a th:href="@{|/question/detail/${question.id}|}" th:text="${question.subject}"></a>
                 <!-- 리스트에 각 질문별 답변 개수 표시-->

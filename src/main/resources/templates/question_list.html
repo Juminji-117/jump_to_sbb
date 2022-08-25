@@ -15,8 +15,8 @@
             <form class="input-group">
                 <!-- 검색창 -->
                 <input class="form-control" type="text" name="kw" placeholder="검색어를 입력해주세요." th:value="${param.kw}">
-                <--! 정렬기준 선택 -->
-                <select class="form-select" name="sortCode" th:value="${param.sortCode}">
+                <!-- 정렬기준 선택 -->
+                <select onchange="$(this).closest('form').submit();" class="form-select" name="sortCode" th:value="${param.sortCode}">
                     <option value="NEW">최신순</option>
                     <option value="OLD">오래된순</option>
                 </select>

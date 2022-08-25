@@ -62,7 +62,7 @@
             <!-- 이전페이지가 없으면 disabled 처리 -->
             <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
                 <a class="page-link"
-                   th:href="@{|?page=${paging.number-1}&kw=${kw}|}">
+                   th:href="@{|?page=${paging.number-1}&kw=${kw}&sortCode=${sortCode}|}">
                     <span>이전</span>
                 </a>
             </li>
@@ -71,11 +71,11 @@
                 th:classappend="${page == paging.number} ? 'active'"
                 class="page-item">
                 <!-- page는 0부터 시작하므로 1부터 시작하도록-->
-                <a th:text="${page + 1}" class="page-link" th:href="@{|?page=${page}&kw=${kw}|}"></a>
+                <a th:text="${page + 1}" class="page-link" th:href="@{|?page=${page}&kw=${kw}&sortCode=${sortCode}|}"></a>
             </li>
 
             <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
-                <a class="page-link" th:href="@{|?page=${paging.number+1}&kw=${kw}|}">
+                <a class="page-link" th:href="@{|?page=${paging.number+1}&kw=${kw}&sortCode=${sortCode}|}">
                     <span>다음</span>
                 </a>
             </li>

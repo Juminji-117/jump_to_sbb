@@ -66,4 +66,17 @@ public class QuestionService {
         questionRepository.save(question);
     }
 
+    public void updateHitCount(long id) {
+        Question question = getQuestion(id);
+
+        if (question.getHitCount()==null)
+            question.setHitCount(1);
+        else {
+            Integer hitCount = question.getHitCount() + 1;
+            question.setHitCount(hitCount);
+        }
+
+        questionRepository.save(question);
+    }
+
 }

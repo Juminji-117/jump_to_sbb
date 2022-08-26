@@ -34,5 +34,6 @@ public interface QuestionRepository extends JpaRepository<Question, Long>, Repos
     @Modifying
     @Query(value = "ALTER TABLE question AUTO_INCREMENT = 1", nativeQuery = true)
     void truncate(); // 이건 지우면 X. truncateTable 하면 자동으로 이게 실행되므로.
+
 }
 

@@ -15,6 +15,9 @@
                 <div th:if="${question.modifyDate != null}" class="badge bg-light text-dark p-2 text-start mx-3">
                     <div class="mb-2">modified at</div>
                     <div th:text="${#temporals.format(question.modifyDate, 'yyyy-MM-dd HH:mm')}"></div>
+                    <div>
+                        HIT : [[${question.hitCount}]]
+                    </div>
                 </div>
 
                 <div class="badge bg-light text-dark p-2 text-start">

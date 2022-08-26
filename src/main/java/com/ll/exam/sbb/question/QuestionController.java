@@ -26,11 +26,10 @@ public class QuestionController {
 
     @GetMapping("/list")
     // 이 자리에 @ResponseBody가 없으면 resources/question_list/question_list.html 파일을 뷰로 삼는다.
-    public String list(String kw, @RequestParam(defaultValue = "") String sortCode, Model model, @RequestParam(defaultValue = "0") int page) {
+    public String list(@RequestParam(defaultValue = "") String kw, @RequestParam(defaultValue = "") String sortCode, Model model, @RequestParam(defaultValue = "0") int page) {
         Page<Question> paging = questionService.getList(kw, page, sortCode);
 
-        // 미래에 실행된 question_list.html 에서
-        // questionList 라는 이름으로 questionList 변수를 사용할 수 있다.
+        //paging == question List가 페이징 처리된 List
         model.addAttribute("paging", paging);
         model.addAttribute("kw", kw);
         model.addAttribute("sortCode", sortCode);
@@ -38,8 +37,12 @@ public class QuestionController {
         return "question_list";
     }
 
-        @GetMapping("/detail/{id}")
+    @GetMapping("/detail/{id}")
     public String detail(Model model, @PathVariable long id, AnswerForm answerForm) {
+
+        // detail 페이지 호출할 때마다(들어올 때마다) 조회수 증가
+        questionService.updateHitCount(id);
+
         // question fetchType.Eager로 설정하면 이 때 answerList 가져옴
         Question question = questionService.getQuestion(id);
 
@@ -139,4 +142,4 @@ public class QuestionController {
         return "redirect:/question/detail/%d".formatted(id);
     }
 
-    }
+}
